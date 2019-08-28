@@ -481,6 +481,7 @@ plot_seq_source <- function(data) {
 ### plot bar chart with taxonomy -----------------------------------------------
 plot_tax <- function(data, n = 15) {
   tab_tax <- table(data$order)
+  n_groups <- length(tab_tax)
   tab_tax_part <- table(data$order, data$plant_part)
   tab_tax <- sort(tab_tax, decreasing = T)
   others <- sum(tail(tab_tax, length(tab_tax) - n))
@@ -499,6 +500,7 @@ plot_tax <- function(data, n = 15) {
     main = "Main endophyte orders in NCBI GenBank")
   text(x, y = -1000, gsub("_", " ", names(tab_tax)), xpd = TRUE, srt = 45,
     adj = 1)
+  mtext(paste(n_groups, "order-level groups"), side = 3, line = -1)
   mtext("records (n)", side = 2, line = 4)
   dev.off()
 
@@ -535,6 +537,7 @@ plot_host_plant <- function(data, n = 15) {
   unknown <- data[which(names(data) == "")]
   names(unknown) <- "unknown"
   data <- data[-which(names(data) == "")]
+  n_groups <- length(data)
   others <- sum(tail(data, length(data) - n))
   names(others) <- "others"
   data <- head(data, n)
@@ -548,6 +551,7 @@ plot_host_plant <- function(data, n = 15) {
     main = "Main endophyte hosts in NCBI GenBank")
   text(x, y = -1000, gsub("_", " ", names(data)), xpd = TRUE, srt = 45,
     adj = 1)
+  mtext(paste(n_groups, "family-level groups"), side = 3, line = -1)
   mtext("records (n)", side = 2, line = 4)
   dev.off()
 }
