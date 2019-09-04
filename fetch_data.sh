@@ -48,9 +48,25 @@ mv $myfile* files
 
 
 ### identify ITS sequences
+# download last version of UNITE ITS reference dataset, mothur release
+# check https://unite.ut.ee/repository.php
+if test -f ./data/UNITE_sh_dynamic.tax
+then
+  echo "UNITE database found"
+else
+  mkdir -p data
+  wget -P data https://files.plutof.ut.ee/public/orig/56/25/5625BDC830DC246F5B8C7004220089E032CC33EEF515C76CD0D92F25BDFA9F78.zip
+  unzip data/*.zip
+  rm data/*.zip
+  mv data/UNITE*_sh_dynamic.fasta data/UNITE_sh_dynamic.fasta
+  mv data/UNITE*_sh_dynamic.tax data/UNITE_sh_dynamic.tax
+  rm data/UNITEv*
+fi
+
+# identify sequences with mothur
 mothur "#classify.seqs(fasta=files/20190726_endophytic_Fungi.fasta,\
-  template=scripts/data/UNITEv6_sh_dynamic_s.fasta,\
-  taxonomy=scripts/data/UNITEv6_sh_dynamic_s.tax, cutoff=60, probs=T)" 
+  template=data/UNITEv6_sh_dynamic_s.fasta,\
+  taxonomy=data/UNITEv6_sh_dynamic_s.tax, cutoff=60, probs=T)" 
 removeTaxonTag files/20190726_endophytic_Fungi.UNITEv6_sh_dynamic_s.wang.taxonomy \
   files/taxonomy_boot.csv
 cp files/taxonomy_boot.csv files/taxonomy.csv
