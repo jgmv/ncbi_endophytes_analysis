@@ -45,7 +45,7 @@ plot_map(endo, trans = "log10") # output/endophytes_map.png
 
 # plant organs of origin
 tab_organ <- table(endo$plant_part)
-plot_isolation_organ(tab_organ)# output/isolation_organ.png
+plot_isolation_organ(tab_organ) # output/isolation_organ.png
 
 # environmental vs. cultures
 tab_seq_source <- table(endo$environmental_sample)
